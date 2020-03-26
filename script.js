@@ -63,3 +63,21 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var layers = document.getElementById('menu');
   layers.appendChild(link);
 }
+
+// Add buildings popup
+map.on('click', 'denver-buildings', function (e) {
+  map.getCanvas().style.cursor = 'crosshair';
+  var buildingType = e.features[0].properties.type;
+  var buildingID = e.features[0].properties.id;
+
+  var popupHTML = `<p>Building ID: ${buildingID} <br> Building Type: ${buildingType}</p>`;
+
+  new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(popupHTML)
+    .addTo(map);
+})
+
+map.on('zoom', function () {
+  map.getCanvas().style.cursor = '';
+})
